@@ -253,7 +253,7 @@ public class Demo {
 		NN = null;
 		NNA = null;
 		
-		System.out.println("Loading the data and neural network from RAM");
+		System.out.println("Loading the data and neural network to RAM");
 		SplitDataSet ds = DataSet.loadFrom("DemoData");
 		NN = NeuralNetworkBuilder.loadFrom("DemoNN");
 		NNA = new GraphNeuralNetworkAnalyzer(NN);
