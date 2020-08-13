@@ -206,7 +206,7 @@ public class Perceptron implements Comparable<Perceptron> {
 		children.add(child);
 	}
 
-	public void assignParent(Perceptron parent) { // Changed to try to un-limit the domain from -1 to 1; may be wrong.
+	public void assignParent(Perceptron parent) {
 		double newWeight = Math.random() * 2. - 1;
 
 		parentWeightMap.put(parent, newWeight);
