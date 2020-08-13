@@ -31,16 +31,13 @@ public class OutputPerceptron extends Perceptron {
 
 			// This is the part where this perceptron's weights are actually updated
 
-			for (Entry<Perceptron, Double> parentWeightPair : parentWeightMap.entrySet()) { // Changed to try to
-																							// un-limit the domain from
-																							// -1 to 1; may be wrong.
+			for (Entry<Perceptron, Double> parentWeightPair : parentWeightMap.entrySet()) { 
 				double newValue = parentWeightPair.getValue()
 						+ LEARNING_RATE * value * (1 - value) * err * parentWeightPair.getKey().getValue();
 
 				parentWeightPair.setValue(newValue);
 			}
 			bias += LEARNING_RATE * value * (1 - value) * err; // Changed to try to un-limit the domain from -1 to 1;
-																// may be wrong.
 
 			this.weightsUpdated = true;
 		}
