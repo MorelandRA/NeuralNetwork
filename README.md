@@ -8,4 +8,4 @@ To view a demo of the project, run the Demo.java class and view the console. It 
 to include more data sets with more complex data. For now, the data serves the purpose of confirming that the project is functioning correctly.
 
 In order for the demo to be successful, you will need to download iris.data from here: https://archive.ics.uci.edu/ml/machine-learning-databases/iris/
-and save it under the working directory as "Iris.csv".
+and save it under the project directory as "Iris.csv".
