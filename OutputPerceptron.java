@@ -1,6 +1,10 @@
 import java.util.Map.Entry;
 
 public class OutputPerceptron extends Perceptron {
+	OutputPerceptron(long id) {
+		super(id);
+	}
+
 	private double actualValue;
 
 	@Override

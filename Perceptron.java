@@ -22,15 +22,12 @@ public class Perceptron implements Comparable<Perceptron> {
 	protected double err;
 
 	private long perceptronID;
-	static long IDCounter = 1;
 
 	protected static double LEARNING_RATE = 0.5;
 	protected static double MOMENTUM = 0.3;
 
-	Perceptron() {
-		perceptronID = IDCounter; // TODO have this be handed down by the neural net so that different neural nets
-									// can use the same IDs.
-		IDCounter++;
+	Perceptron(long id) {
+		perceptronID = id;
 	}
 
 	@Override

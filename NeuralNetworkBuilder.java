@@ -17,6 +17,7 @@ public class NeuralNetworkBuilder {
 	// for the data set,
 	// And "intermediate" number of perceptrons as a middle, hidden layer
 	static GraphNeuralNetwork buildSampleNetwork(DataSet data, int intermediate) {
+		Long perceptronIDCounter = 0L;
 		// Count inputs from data
 		int numOfInputs = data.getTestingData().get(0).getInputs().size();
 		// Count outputs from data
@@ -27,12 +28,12 @@ public class NeuralNetworkBuilder {
 
 		// Create input perceptrons
 		for (int i = 0; i < numOfInputs; i++) {
-			inputs.add(new InputPerceptron());
+			inputs.add(new InputPerceptron(perceptronIDCounter++));
 		}
 
 		// Create output perceptrons
 		for (int i = 0; i < numOfOutputs; i++) {
-			outputs.add(new OutputPerceptron());
+			outputs.add(new OutputPerceptron(perceptronIDCounter++));
 		}
 
 		// Connect all inputs as parents to outputs
@@ -44,7 +45,7 @@ public class NeuralNetworkBuilder {
 
 		// Create "intermediate" number of perceptrons
 		for (int i = 0; i < intermediate; i++) {
-			Perceptron newPerceptron = new Perceptron();
+			Perceptron newPerceptron = new Perceptron(perceptronIDCounter++);
 
 			// Connect all inputs as parents to intermediate perceptrons
 			for (int j = 0; j < numOfInputs; j++) {
@@ -113,18 +114,18 @@ public class NeuralNetworkBuilder {
 			// set newPerceptron to be the proper type, and..
 			if (type.equalsIgnoreCase("Input")) {
 				// If it's an input perceptron, add it to the inputs list
-				newPerceptron = new InputPerceptron();
+				newPerceptron = new InputPerceptron(newPerceptronID);
 				inputs.add((InputPerceptron) newPerceptron);
 			} else if (type.equalsIgnoreCase("Output")) {
 				// If it's an output perceptron, add it to the outputs list
-				newPerceptron = new OutputPerceptron();
+				newPerceptron = new OutputPerceptron(newPerceptronID);
 				outputs.add((OutputPerceptron) newPerceptron);
 			} else {
 				if (!type.equalsIgnoreCase("Hidden")) {
 					throw new IOException(
 							"Invalid perceptron type: \"" + progressedString + "\", expected input, output, or hidden");
 				}
-				newPerceptron = new Perceptron();
+				newPerceptron = new Perceptron(newPerceptronID);
 			}
 
 			// If the new perceptron has been seen before
@@ -139,8 +140,7 @@ public class NeuralNetworkBuilder {
 				placeholderPerceptron.delete();
 			}
 
-			// Set the perceptronID and add it to the map
-			newPerceptron.setPerceptronID(newPerceptronID);
+			// Add the new perceptron to the map
 			perceptrons.put(newPerceptron.getPerceptronID(), newPerceptron);
 
 			// Set its bias
@@ -152,7 +152,7 @@ public class NeuralNetworkBuilder {
 				// If we don't already have it in memory, add a placeholder to memory. We'll
 				// replace it when we find it again later.
 				if (!perceptrons.containsKey(parentID)) {
-					Perceptron parent = new Perceptron();
+					Perceptron parent = new Perceptron(parentID);
 					parent.setPerceptronID(parentID);
 					perceptrons.put(parentID, parent);
 				}
@@ -192,13 +192,13 @@ public class NeuralNetworkBuilder {
 				Perceptron newPerceptron;
 
 				if (next.getPerceptronType().equalsIgnoreCase("Input")) {
-					newPerceptron = new InputPerceptron();
+					newPerceptron = new InputPerceptron(next.getPerceptronID());
 					inputs.add((InputPerceptron) newPerceptron);
 				} else if (next.getPerceptronType().equalsIgnoreCase("Output")) {
-					newPerceptron = new OutputPerceptron();
+					newPerceptron = new OutputPerceptron(next.getPerceptronID());
 					outputs.add((OutputPerceptron) newPerceptron);
 				} else {
-					newPerceptron = new Perceptron();
+					newPerceptron = new Perceptron(next.getPerceptronID());
 				}
 
 				newPerceptron.setPerceptronID(next.getPerceptronID());
@@ -224,13 +224,14 @@ public class NeuralNetworkBuilder {
 	}
 
 	public static GraphNeuralNetwork buildSimpleNetwork(int inputSize, int outputSize) {
+		Long perceptronIDCounter = 0L;
 		AbstractList<InputPerceptron> inputs = new ArrayList<InputPerceptron>();
 		AbstractList<OutputPerceptron> outputs = new ArrayList<OutputPerceptron>();
 		for (int i = 0; i < inputSize; i++) {
-			inputs.add(new InputPerceptron());
+			inputs.add(new InputPerceptron(perceptronIDCounter++));
 		}
 		for (int i = 0; i < outputSize; i++) {
-			OutputPerceptron output = new OutputPerceptron();
+			OutputPerceptron output = new OutputPerceptron(perceptronIDCounter++);
 			for (InputPerceptron input : inputs) {
 				relate(input, output);
 			}

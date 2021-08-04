@@ -1,6 +1,7 @@
 
 public class InputPerceptron extends Perceptron {
-	InputPerceptron(){
+	InputPerceptron(long id){
+		super(id);
 		valueUpdated = true;
 	}
 	
