@@ -253,9 +253,12 @@ public class Demo {
 		NN = null;
 		NNA = null;
 		
-		System.out.println("Loading the data and neural network to RAM");
+		System.out.println("Loading the data from \"DemoData\"");
 		SplitDataSet ds = DataSet.loadFrom("DemoData");
+		System.out.println("Successfully loaded demo data");
+		System.out.println("Loading the network from \"DemoNN\"");
 		NN = NeuralNetworkBuilder.loadFrom("DemoNN");
+		System.out.println("Successfully loaded neural network");
 		NNA = new GraphNeuralNetworkAnalyzer(NN);
 		
 		accuracy = NNA.calculateAccuracyOnTrainingData(ds)*100;
