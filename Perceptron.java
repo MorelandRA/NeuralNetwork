@@ -206,8 +206,12 @@ public class Perceptron implements Comparable<Perceptron> {
 		children.add(child);
 	}
 
+	static public double getRandomWeight() {
+		return Math.random() * 2. - 1;
+	}
+	
 	public void assignParent(Perceptron parent) {
-		double newWeight = Math.random() * 2. - 1;
+		double newWeight = getRandomWeight();
 
 		parentWeightMap.put(parent, newWeight);
 		setValueUpdated(false);
