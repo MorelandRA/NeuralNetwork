@@ -69,8 +69,7 @@ public class NeuralNetworkBuilder {
 			e.printStackTrace();
 		}
 
-		if (in == null)
-			return null;
+		if (in == null) return null;
 
 		Map<Long, Perceptron> perceptrons = new TreeMap<Long, Perceptron>();
 		AbstractList<InputPerceptron> inputs = new ArrayList<InputPerceptron>();
@@ -88,6 +87,9 @@ public class NeuralNetworkBuilder {
 		while (in.hasNextLine()) {
 			Perceptron newPerceptron;
 			String type = in.nextLine();
+			Long newPerceptronID = in.nextLong();
+			
+			
 			if (type.equalsIgnoreCase("Input")) {
 				newPerceptron = new InputPerceptron();
 				inputs.add((InputPerceptron) newPerceptron);
@@ -101,15 +103,32 @@ public class NeuralNetworkBuilder {
 				newPerceptron = new Perceptron();
 			}
 			
-			newPerceptron.setPerceptronID(in.nextInt());
+			if(perceptrons.containsKey(newPerceptronID)) {
+				Perceptron placeholderPerceptron = perceptrons.get(newPerceptronID);
+				//TODO: Do this better
+				for(Perceptron child : placeholderPerceptron.children) {
+					relate(newPerceptron, child, child.parentWeightMap.get(placeholderPerceptron));
+				}
+				placeholderPerceptron.delete();
+			}
+			
+			newPerceptron.setPerceptronID(newPerceptronID);
 			perceptrons.put(newPerceptron.getPerceptronID(), newPerceptron);
+			
+			
 			newPerceptron.setBias(in.nextDouble());
 			while (in.hasNextLong()) {
 				Long parentID = in.nextLong();
+				if(!perceptrons.containsKey(parentID)) {
+					Perceptron parent = new Perceptron();
+					parent.setPerceptronID(parentID);
+					perceptrons.put(parentID, parent);
+				}
+				
 				double weight = in.nextDouble();
-
+	
 				Perceptron parent = perceptrons.get(parentID);
-
+	
 				relate(parent, newPerceptron, weight);
 			}
 			in.nextLine();
