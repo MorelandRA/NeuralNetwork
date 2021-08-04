@@ -51,15 +51,11 @@ public class InputPerceptron extends Perceptron {
 		}
 		
 		StringBuffer str = new StringBuffer();
-		try {
 		str.append("Perceptron ID: " + getPerceptronID());
 		str.append("\nPerceptron type: " + getPerceptronType());
 		str.append("\nValue: " + getValue());
 		str.append("\nOutput IDs: " + getChildDetails());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 		return str.toString();
 	}
 	
