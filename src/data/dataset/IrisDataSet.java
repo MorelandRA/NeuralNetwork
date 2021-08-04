@@ -36,12 +36,13 @@ public class IrisDataSet extends DefinedDataSet {
 	}
 	
 	private static ArrayList<DataPoint> getDataPoints() throws Exception{
-		File file = new File("Iris.csv");
+		String irisLoc = "src/resources/Iris.csv";
+		File file = new File(irisLoc);
 		Scanner in = null;
 		try {
 			in = new Scanner(file).useDelimiter(",|\\s+");
 		} catch (FileNotFoundException e) {
-			throw new Exception("The Iris dataset was unable to be found. It should be in the CWD");
+			throw new FileNotFoundException("The Iris dataset was unable to be found. It should be in " + irisLoc);
 		}
 		ArrayList<DataPoint> dataSet = new ArrayList<DataPoint>();
 		

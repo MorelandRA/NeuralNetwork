@@ -1,5 +1,6 @@
 package main;
 
+import java.io.File;
 import java.util.AbstractList;
 
 import data.DataPoint;
@@ -257,27 +258,31 @@ public class Demo {
 		 *    SAVING AND LOADING
 		 * 
 		 ******************************/
+		String demoDataLoc = "src/resources/DemoData";
+		String demoNNLoc = "src/resources/DemoNN";
 
-		System.out.println("\n\nSaving the data and neural network under your current working directory as \"DemoData\" and \"DemoNN\"");
-		irisDS.saveTo("DemoData");
-		NN.saveTo("DemoNN");
+		System.out.println("\n\nSaving the data and neural network under your current working directory as " + demoDataLoc + " and " + demoNNLoc);
+		irisDS.saveTo(demoDataLoc);
+		NN.saveTo(demoNNLoc);
 		
-		System.out.println("Forgetting the data and neural network from RAM");
+		System.out.println("Forgetting the data and neural network from RAM\n");
 		irisDS = null;
 		NN = null;
 		NNA = null;
 		
-		System.out.println("Loading the data from \"DemoData\"");
-		SplitDataSet ds = DataSet.loadFrom("DemoData");
-		System.out.println("Successfully loaded demo data");
-		System.out.println("Loading the network from \"DemoNN\"");
-		NN = NeuralNetworkBuilder.loadFrom("DemoNN");
-		System.out.println("Successfully loaded neural network");
+		System.out.println("Loading the data from " + demoDataLoc);
+		SplitDataSet ds = DataSet.loadFrom(demoDataLoc);
+		System.out.println("Loading the network from " + demoNNLoc);
+		NN = NeuralNetworkBuilder.loadFrom(demoNNLoc);
 		NNA = new GraphNeuralNetworkAnalyzer(NN);
 		
 		accuracy = NNA.calculateAccuracyOnTrainingData(ds)*100;
-		System.out.println("No training has been done since loading, and the neural network is still " + accuracy + "% accurate.");
+		System.out.println("\nNo training has been done since loading, and the neural network is still " + accuracy + "% accurate.\n");
 		
-		
+		System.out.println("Deleting the saved data and neural network from your system.");
+		File demoData = new File(demoDataLoc);
+		demoData.delete();
+		File demoNN = new File(demoNNLoc);
+		demoNN.delete();
 	}
 }
